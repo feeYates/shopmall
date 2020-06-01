@@ -39,8 +39,15 @@ export class Shop {
 export class GoodsParam {
   constructor(info, rule) {
     // images可能没有值(某些商品有值，某些没有值)
-    this.image = info.images ? info.image[0] : '',
+    this.image = info.images ? info.images[0] : '',
     this.infos = info.set;
     this.sizes = rule.tables;
   }
+}
+
+// 商品推荐
+export function getRecommend() {
+  return request1({
+    url: '/recommend'
+  })
 }
