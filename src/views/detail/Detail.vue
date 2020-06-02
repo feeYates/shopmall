@@ -6,6 +6,11 @@
             @scroll="contentScroll" 
             :probeType="3">
       <detail-swiper :topImages="topImages" class="detail-swiper"/>
+      <ul>
+        <li v-for="(item, index) in $store.state.cartList" :key="index">
+          {{item}}
+        </li>
+      </ul>
       <detail-base-info :goodsInfo="goodsInfo"/>
       <detail-shop-info :shop="shop"/>
       <detail-goods-info :detailInfo="detailInfo" @imagesLoad="imagesLoad"/>
@@ -13,12 +18,14 @@
       <detail-comment-info ref="comment" :commentInfo="commentInfo"/>
       <good-list ref="recommend" :goods="recommends"/>
     </scroll>
+    <detail-bottom-bar @addCart="addToCart"/>
+    <back-top @click.native="backTop" v-show="isBackTopShow"></back-top>
   </div>
 </template>
 <script>
 import {getDetail, GoodsInfo, Shop, GoodsParam, getRecommend} from 'network/detail'
 import {debounce} from 'common/utils'
-import {itemListenerMixin} from 'common/mixin'
+import {itemListenerMixin, backTopMixin} from 'common/mixin'
 
 import DetailNavBar from './subCompoents/DetailNavBar'
 import DetailSwiper from './subCompoents/DetailSwiper'
@@ -27,9 +34,11 @@ import DetailShopInfo from './subCompoents/DetailShopInfo'
 import DetailGoodsInfo from './subCompoents/DetailGoodsInfo'
 import DetailParamInfo from './subCompoents/DetailParamInfo'
 import DetailCommentInfo from './subCompoents/DetailCommentInfo'
+import DetailBottomBar from './subCompoents/DetailBottomBar'
 
 import Scroll from 'components/common/scroll/Scroll'
 import GoodList from 'components/content/goods/GoodList'
+
 export default {
   name: 'Detail',
   data() {
@@ -55,10 +64,11 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
+    DetailBottomBar,
     Scroll,
-    GoodList
+    GoodList,
   },
-  mixins: [itemListenerMixin],
+  mixins: [itemListenerMixin, backTopMixin],
   created() {
     // 保存传入的iid
     this.iid = this.$route.params.iid
@@ -66,7 +76,6 @@ export default {
     // 根据iid请求详情数据
     getDetail(this.iid).then(res => {
       // 获取顶部的图片轮播数据
-      console.log(res)
       const data = res.result
       this.topImages = data.itemInfo.topImages;
 
@@ -132,7 +141,6 @@ export default {
         this.themeTopYs.push(this.$refs.comment.$el.offsetTop - 40)
         this.themeTopYs.push(this.$refs.recommend.$el.offsetTop - 40)
         this.themeTopYs.push(Number.MAX_VALUE)
-        console.log(this.themeTopYs)
     })
   },
   mounted() {
@@ -182,10 +190,28 @@ export default {
           this.currentIndex = i;  
           this.$refs.nav.currentIndex = this.currentIndex;
         }
-
       } 
+
+      // 是否显示回到顶部
+      this.listeneShowBackTop(position)
+    },
+    // 添加购物车方法
+    addToCart() {
+      // 1.获取购物车需要展示的信息
+      const product = {};
+      product.image = this.topImages[0];
+      product.title = this.goodsInfo.title;
+      product.desc = this.goodsInfo.desc;
+      product.price = this.goodsInfo.newPrice;
+      product.iid = this.iid;
+
+      // 2.将商品添加到购物车 
+      // this.$store.cartList.push(product)
+      // this.$store.commit('addCart', product)
+      this.$store.dispatch('addCart', product)
+     
+
     }
-    
   },
   destroyed() {
     this.$bus.$off('itemImgLoad', this.itemImgListenner)
@@ -196,7 +222,7 @@ export default {
 
 <style scoped>
   #detail {
-    position: relative;
+    position: fixed;
     z-index: 9;
     background-color: #fff;
     height: 100vh;
@@ -207,6 +233,6 @@ export default {
     z-index: 9;
   }
   .content {
-    height: calc(100% - 40px);
+    height: calc(100% - 40px - 49px);
   }
 </style>

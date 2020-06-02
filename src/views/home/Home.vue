@@ -29,7 +29,7 @@
       <goods-list :goods="showGoodsType"></goods-list>
     </scroll>
 
-    <back-top @click.native="backClick" v-show="isBackTopShow"></back-top>
+    <back-top @click.native="backTop" v-show="isBackTopShow"></back-top>
 
 
   </div>
@@ -44,11 +44,10 @@
   import Scroll from 'components/common/scroll/Scroll'
   import TabControl from 'components/content/tabControl/TabControl'
   import GoodsList from 'components/content/goods/GoodList'
-  import BackTop from 'components/content/backTop/BackTop'
 
   import {getHomeMultidata, getHomeGoods} from 'network/home'
   import {debounce} from 'common/utils'
-  import {itemListenerMixin} from 'common/mixin'
+  import {itemListenerMixin, backTopMixin} from 'common/mixin'
   export default {
     components: {
       NavBar,
@@ -57,8 +56,7 @@
       FeatureView,
       TabControl,
       GoodsList,
-      Scroll,
-      BackTop
+      Scroll
     },
     data() {
       return {
@@ -71,13 +69,12 @@
           'sell': {page: 0, list: []}
         },
         goodsType: 'pop',
-        isBackTopShow: false,
         tabOffsetTop: 0,
         isTabFixed: false,
         saveY: 0
       }
     },
-    mixins: [itemListenerMixin],
+    mixins: [itemListenerMixin, backTopMixin],
     created() {
       // 1.请求多个数据(banner)
       this.getHomeMultidata()
@@ -125,9 +122,6 @@
         this.$refs.tabControl1.currentIndex = index;
         this.$refs.tabControl2.currentIndex = index;
       },
-      backClick() {
-        this.$refs.scroll.scrollTo(0,0, 2000)
-      },
       contentSroll(position) {
         /*if(-position.y > 1000) {
           this.isBackTopShow = true;
@@ -135,7 +129,7 @@
            this.isBackTopShow = false;
         } */
         // 1. 判断BackTop是否显示
-        this.isBackTopShow = -(position.y) > 1000
+        this.listeneShowBackTop(position)
 
         // 2.决定tabControl是否吸顶(position: fixed)
         this.isTabFixed = -(position.y) > this.tabOffsetTop
