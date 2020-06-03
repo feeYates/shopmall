@@ -6,11 +6,6 @@
             @scroll="contentScroll" 
             :probeType="3">
       <detail-swiper :topImages="topImages" class="detail-swiper"/>
-      <ul>
-        <li v-for="(item, index) in $store.state.cartList" :key="index">
-          {{item}}
-        </li>
-      </ul>
       <detail-base-info :goodsInfo="goodsInfo"/>
       <detail-shop-info :shop="shop"/>
       <detail-goods-info :detailInfo="detailInfo" @imagesLoad="imagesLoad"/>
@@ -20,6 +15,7 @@
     </scroll>
     <detail-bottom-bar @addCart="addToCart"/>
     <back-top @click.native="backTop" v-show="isBackTopShow"></back-top>
+    <!-- <toast :message="msg" :isShowToast="isShowToast"/> -->
   </div>
 </template>
 <script>
@@ -35,10 +31,11 @@ import DetailGoodsInfo from './subCompoents/DetailGoodsInfo'
 import DetailParamInfo from './subCompoents/DetailParamInfo'
 import DetailCommentInfo from './subCompoents/DetailCommentInfo'
 import DetailBottomBar from './subCompoents/DetailBottomBar'
+// import Toast from 'components/common/toast/Toast'
 
 import Scroll from 'components/common/scroll/Scroll'
 import GoodList from 'components/content/goods/GoodList'
-
+import { mapActions } from 'vuex'
 export default {
   name: 'Detail',
   data() {
@@ -53,7 +50,7 @@ export default {
       recommends: [],
       themeTopYs: [],
       getThemeTopY: null,
-      currentIndex: 0
+      currentIndex: 0,
     }
   },
   components: {
@@ -66,7 +63,7 @@ export default {
     DetailCommentInfo,
     DetailBottomBar,
     Scroll,
-    GoodList,
+    GoodList
   },
   mixins: [itemListenerMixin, backTopMixin],
   created() {
@@ -76,6 +73,7 @@ export default {
     // 根据iid请求详情数据
     getDetail(this.iid).then(res => {
       // 获取顶部的图片轮播数据
+      console.log(res)
       const data = res.result
       this.topImages = data.itemInfo.topImages;
 
@@ -147,6 +145,7 @@ export default {
 
   },
   methods: {
+    ...mapActions(['addCart']),
     imagesLoad() {
       this.$refs.scroll.refresh();
       this.getThemeTopY();
@@ -202,13 +201,27 @@ export default {
       product.image = this.topImages[0];
       product.title = this.goodsInfo.title;
       product.desc = this.goodsInfo.desc;
-      product.price = this.goodsInfo.newPrice;
+      product.price = this.goodsInfo.realPrice;
       product.iid = this.iid;
 
       // 2.将商品添加到购物车 
       // this.$store.cartList.push(product)
       // this.$store.commit('addCart', product)
-      this.$store.dispatch('addCart', product)
+      this.addCart(product).then(res => {
+        /* this.isShowToast = true;
+        this.msg = res;
+
+        setTimeout(() => {
+          this.isShowToast = false;
+          this.msg = ''
+        }, 1500) */
+        this.$toast(res, 1000)
+  
+      })
+
+      this.$store.dispatch('addCart', product).then(res => {
+        // console.log(res);
+      })
      
 
     }
