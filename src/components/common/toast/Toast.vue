@@ -23,8 +23,7 @@ export default {
     }
   },
   methods: {
-    showToast(message, duration) {
-      console.log('----')
+    show(message='默认提示', duration=2000) {
       this.isShowToast = true;
       this.message = message;
 
@@ -32,7 +31,7 @@ export default {
         this.isShowToast = false;
         this.message = ''
       }, duration)
-    }
+    } 
   },
 }
 </script>

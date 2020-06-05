@@ -50,7 +50,7 @@ export default {
       recommends: [],
       themeTopYs: [],
       getThemeTopY: null,
-      currentIndex: 0,
+      currentIndex: 0
     }
   },
   components: {
@@ -207,16 +207,16 @@ export default {
       // 2.将商品添加到购物车 
       // this.$store.cartList.push(product)
       // this.$store.commit('addCart', product)
-      this.addCart(product).then(res => {
-        /* this.isShowToast = true;
+      
+      /*  this.isShowToast = true;
         this.msg = res;
 
         setTimeout(() => {
           this.isShowToast = false;
           this.msg = ''
         }, 1500) */
-        this.$toast(res, 1000)
-  
+      this.addCart(product).then(res => {
+        this.$toast.show(res, 1500)
       })
 
       this.$store.dispatch('addCart', product).then(res => {
