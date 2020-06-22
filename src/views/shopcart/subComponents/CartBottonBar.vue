@@ -64,6 +64,7 @@ export default {
     calcClick() {
       if(!this.checkedLength) {
         this.$toast.show('请选择购买的商品', 2000)
+        console.log(this)
       }
     }
   },
