@@ -2,6 +2,9 @@
   <div class="shop-cart">
     <!-- 导航栏 -->
     <nav-bar class="nav-bar">
+      <div slot="left" @click="back">
+        <img class="back" src="~/assets/img/cart/back.png" alt="">
+      </div>
       <div slot="center">购物车({{cartLength}})</div>
     </nav-bar>
 
@@ -37,6 +40,11 @@ export default {
       return this.$store.getters.cartLength;
     } */
   },
+  methods: {
+    back() {
+      this.$router.go(-1)
+    }
+  },
   components:{
     NavBar,
     CartList,
@@ -53,5 +61,10 @@ export default {
   background-color: var(--color-tint);
   color: #fff;
   font-weight: 700;
+}
+.nav-bar .back {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
 }
 </style>

@@ -219,11 +219,9 @@ export default {
         this.$toast.show(res, 1500)
       })
 
-      this.$store.dispatch('addCart', product).then(res => {
+      /* this.$store.dispatch('addCart', product).then(res => {
         // console.log(res);
-      })
-     
-
+      }) */
     }
   },
   destroyed() {

@@ -185,7 +185,7 @@
     overflow: hidden;
 
     position: absolute;
-    top: 40px;
+    top: 44px;
     right: 0;
     left: 0;
     bottom: 49px;

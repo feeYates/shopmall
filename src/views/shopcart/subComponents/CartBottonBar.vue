@@ -75,13 +75,17 @@ export default {
   .bottom-bar {
     position: relative;
     display: flex;
+    bottom: -30px;
+    left: 0;
+    right: 0;
 
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
+    line-height: 50px;
     
     font-size: 14px;
     background-color: #eee;
-  
+    z-index: 9999;
+    
   }
   .check-container{
     display: flex;

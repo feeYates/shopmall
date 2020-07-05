@@ -10,10 +10,10 @@ export default {
         if(item.iid === payload.iid) {
           oldProduct = item;
         }
-      } */
+      }
 
     // 判断oldProduct
-    /* if(index === -1) {
+    if(index === -1) {
       let oldProduct = state.cartList[index]
       oldProduct.count += 1;
     }else {
@@ -28,7 +28,6 @@ export default {
 
    return new Promise((resolve, reject) => {
     let oldProduct = context.state.cartList.find(item => item.iid === payload.iid)
-
     // 判断oldProduct
     if(oldProduct) {  // 数量 +1
       // oldProduct.count += 1;
