@@ -34,6 +34,7 @@ export default {
   .list-item img {
     width: 20px;
     height: 20px;
-    margin: auto 10px;
+    margin: 0 10px;
+    vertical-align: middle;
   }
 </style>
