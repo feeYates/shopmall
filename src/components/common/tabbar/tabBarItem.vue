@@ -41,7 +41,7 @@ export default {
       if(this.$router.path === this.path) {
         return
       }else{
-        this.$router.replace(this.path).catch(err=> err)
+        this.$router.push(this.path).catch(err=> err)
       }
     }
   }
@@ -61,7 +61,7 @@ export default {
 .tab-bar-item img {
   width: 26px;
   height: 26px;
-  margin-top: 3px;
+  margin: 3px 0;
   vertical-align: middle;
 }
 

@@ -15,11 +15,11 @@ export function getSubSort(maitKey) {
   })
 }
 
-export function getSortDetail(miniwallkey, type) {
+export function getSortDetail(miniWallkey, type) {
   return request1({
     url: '/subcategory/detail',
     params: {
-      miniwallkey,
+      miniWallkey,
       type
     }
   })

@@ -10,6 +10,7 @@ const Sort = () => import('../views/sort/Sort')
 const ShopCart = () => import('../views/shopcart/ShopCart')
 const Profile = () => import('../views/profile/Profile')
 const Detail = () => import('../views/detail/Detail')
+const Login = () => import('../views/login/Login')
 
 // 2.创建路由对象
 const routes = [
@@ -36,7 +37,12 @@ const routes = [
   {
     path: '/detail/:iid',
     component: Detail
+  },
+  {
+    path: '/login',
+    component: Login
   }
+  
 ]
 
 const router = new VueRouter({

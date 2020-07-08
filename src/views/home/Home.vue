@@ -83,9 +83,7 @@
       this.getHomeGoods('pop')
       this.getHomeGoods('new')
       this.getHomeGoods('sell')
-    },
-    mounted() {
-
+      console.log(this.goods['pop'].list)
     },
     activated() {
       this.$refs.scroll.refresh()

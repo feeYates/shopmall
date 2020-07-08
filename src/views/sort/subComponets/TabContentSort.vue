@@ -2,7 +2,7 @@
   <div id="tab-content-sort">
     <grid-view :cols="3" 
                :lineSpace="15"
-               :vMargin="30"
+               :vMargin="5"
                >
       <div class="item" v-for="(item, index) in subSorts.list" :key="index"> 
         <a :href="item.link" class="item-link">

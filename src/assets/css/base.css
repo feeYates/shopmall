@@ -68,3 +68,10 @@ a {
   float: right;
 }
 
+h1 {
+  margin: 0
+}
+input {
+  border: none;
+  outline: none;
+}

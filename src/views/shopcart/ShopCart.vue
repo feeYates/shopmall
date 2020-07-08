@@ -3,36 +3,34 @@
     <!-- 导航栏 -->
     <nav-bar class="nav-bar">
       <div slot="left" @click="back">
-        <img class="back" src="~/assets/img/cart/back.png" alt="">
+        <img class="back" src="~/assets/img/cart/back.png" alt />
       </div>
       <div slot="center">购物车({{cartLength}})</div>
     </nav-bar>
 
     <!-- 商品列表 -->
-    <cart-list/>
+    <cart-list />
 
     <!-- 商品汇总 -->
-    <cart-bottom-bar/>
+    <cart-bottom-bar  class="cart-bottom-bar"/>
   </div>
 </template>
 
 <script>
-import NavBar from 'components/common/navbar/NavBar'
-import CartList from'./subComponents/CartList'
-import CartBottomBar from './subComponents/CartBottonBar'
+import NavBar from "components/common/navbar/NavBar";
+import CartList from "./subComponents/CartList";
+import CartBottomBar from "./subComponents/CartBottonBar";
 
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'shopCart',
+  name: "shopCart",
   data() {
-    return{
-
-    }
+    return {};
   },
   computed: {
     // 两种语法
-    ...mapGetters(['cartLength'])
+    ...mapGetters(["cartLength"])
     // ...mapGetters({
     //   length: 'cartLength'
     // })
@@ -42,15 +40,17 @@ export default {
   },
   methods: {
     back() {
-      this.$router.back()
+      // this.$router.go(-1)
+      // console.log(this.$router)
+      window.history.go(-1);
     }
   },
-  components:{
+  components: {
     NavBar,
     CartList,
     CartBottomBar
   }
-}
+};
 </script>
 
 <style scoped>
@@ -66,5 +66,11 @@ export default {
   width: 25px;
   height: 25px;
   vertical-align: middle;
+}
+.cart-bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 </style>

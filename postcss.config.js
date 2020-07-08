@@ -6,7 +6,7 @@ module.exports = {
       viewportHeight: 667,//视觉的高度，对应的是我们设计稿的高度
       unitprecision: 5, //指定'px'转换视图单位值的小数位数(很多时候无法整除)
       viewportUnit: 'vw', // 指定需要转成的视窗单位，建议使用vw
-      selectorBlackList: ['ignore', 'tab-bar', 'tab-bar-item', 'profile', 'list-view'], // 指定不需要转换的类，后面再讲
+      selectorBlackList: ['ignore', 'tab-bar', 'tab-bar-item', 'profile', 'list-view', 'login'], // 指定不需要转换的类，后面再讲
       minPixeValue: 1, //小于或等于'1px'不转换为视窗单位
       mediaQuery: false, // 允许在媒体查询中转换'px'
       exclude: [/TabBar/]
